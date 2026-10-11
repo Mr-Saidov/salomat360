@@ -1,0 +1,869 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="SALOMAT 360 — profilaktik tibbiyot platformasi: ko‘rikka chaqiruv, natijalar va shaxsiy menyu. Pitch Day 3.0, HealthTech.">
+<meta property="og:title" content="SALOMAT 360">
+<meta property="og:description" content="Kasallikni kutmang. Sog‘lig‘ingizni bugun tekshiring. Profilaktik tibbiyot platformasi — Pitch Day 3.0.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://salomat360.vercel.app/">
+<meta property="og:image" content="https://salomat360.vercel.app/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%23B4233C%22/%3E%3Cpath d=%22M4 17h6l2-4 4 9 3-12 2 7h7%22 fill=%22none%22 stroke=%22white%22 stroke-width=%222.4%22 stroke-linejoin=%22round%22 stroke-linecap=%22round%22/%3E%3C/svg%3E">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>SALOMAT 360</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: long scroll pitch page; the demo section pairs a phone prototype with a clinic-side panel. Accent = pomegranate (anor), a local symbol of health. */
+:root{
+  --bg:#F4F6F5; --surface:#FFFFFF; --ink:#0F1A16; --muted:#3A4842; --line:#CDD6D1;
+  --accent:#C41E3A; --accent-deep:#8E1028; --accent-soft:#FBE4E8;
+  --good:#2E7D57; --good-soft:#E1F1E8; --warn:#A86B12; --warn-soft:#FBF0DA;
+  --phone:#0E1512;
+  --grid:color-mix(in srgb,var(--accent) 17%,transparent); --grid-fine:color-mix(in srgb,var(--accent) 7%,transparent);
+  --f-display:"Unbounded", "Arial Black", system-ui, sans-serif;
+  --f-body:"Golos Text", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body.l-ru .uz, body:not(.l-ru) .ru{display:none!important}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.15;text-wrap:balance;margin:0}
+h2{font-size:clamp(1.5rem,3.2vw,2.2rem)}
+h3{font-size:1.05rem;font-weight:500}
+p{margin:0}
+.eyebrow{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.muted{color:var(--muted)}
+section{padding-block:72px;border-top:1px solid var(--line)}
+.sec-head{display:grid;gap:12px;max-width:680px;margin-bottom:36px}
+button{font:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tnum{font-variant-numeric:tabular-nums}
+
+/* top bar */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;height:58px}
+.logo{font-family:var(--f-display);font-weight:700;font-size:1rem;display:flex;align-items:center;gap:8px;color:var(--ink);text-decoration:none}
+.logo b{color:var(--accent)}
+.nav{display:flex;gap:18px;font-size:.9rem}
+.nav a{color:var(--muted);text-decoration:none}
+.nav a:hover{color:var(--ink)}
+.lang{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.lang button{border:0;background:transparent;color:var(--muted);padding:6px 10px;font-size:.8rem;font-weight:600}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+@media (max-width:820px){.nav{display:none}}
+
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:10px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);font-weight:600;text-decoration:none;font-size:.95rem}
+.btn.ghost{background:transparent;color:var(--ink)}
+/* HERO: solid pomegranate block, product on stage with live notifications */
+.hero{background:var(--accent);color:#fff;padding-block:64px 0;border-top:0;position:relative;isolation:isolate;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;
+  background-image:linear-gradient(rgba(255,255,255,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.10) 1px,transparent 1px),linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:100px 100px,100px 100px,20px 20px,20px 20px}
+.hero::after{content:"";position:absolute;inset:0;z-index:-2;background:radial-gradient(640px 520px at 76% 40%,rgba(255,255,255,.22),transparent 70%),radial-gradient(700px 500px at 0% 100%,var(--accent-deep),transparent 70%)}
+.hero .eyebrow{color:#fff;opacity:.85}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:40px;align-items:center}
+.hero h1{font-size:clamp(2.3rem,5.4vw,4.3rem);letter-spacing:-.025em;color:#fff}
+.hero h1 em{font-style:normal;background:#fff;color:var(--accent);padding:0 .14em;border-radius:.18em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.hero .lead{font-size:1.12rem;max-width:540px;margin-top:22px;color:rgba(255,255,255,.9)}
+.hero .btn{background:#fff;color:var(--accent);border-color:#fff}
+.hero .btn.ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.6)}
+.quote{display:grid;gap:6px;margin-top:30px;padding:16px 18px;border-radius:14px;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.18);max-width:540px}
+.quote q{font-size:1rem;quotes:"“" "”"}
+.quote small{color:rgba(255,255,255,.75)}
+.stage{position:relative;min-height:560px;display:grid;place-items:center}
+.phone.mini{width:290px;transform:rotate(-4deg);box-shadow:0 40px 80px -20px rgba(60,0,10,.6);border:1px solid rgba(255,255,255,.25)}
+.phone.mini .screen{height:540px;color:var(--ink)}
+.phone.mini .app{overflow:hidden}
+.phone.mini .abtn{display:block;text-align:center}
+.note{position:absolute;display:flex;gap:10px;align-items:center;background:#fff;color:var(--ink);border-radius:14px;padding:10px 14px 10px 10px;box-shadow:0 18px 40px -12px rgba(40,0,8,.45);font-size:.82rem;max-width:250px;animation:float 6s ease-in-out infinite}
+.note b{display:block;font-weight:600;font-size:.86rem}
+.note span{color:var(--muted)}
+.note .dot{width:30px;height:30px;border-radius:9px;flex:none;position:relative}
+.note .dot::after{content:"";position:absolute;inset:10px;border-radius:50%;background:#fff}
+.n1{top:0;left:-10%}
+.n2{top:30%;right:-6%;animation-delay:-1.5s}
+.n3{bottom:26%;left:-12%;animation-delay:-3s}
+.n4{bottom:4%;right:-2%;animation-delay:-4.5s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.ecg{display:block;width:100%;height:70px;margin-top:24px}
+.ecg path{fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round;opacity:.6}
+.ecg circle{fill:#fff}
+@media (max-width:900px){.hero-grid{grid-template-columns:1fr}.stage{min-height:520px}.n1{left:0}.n3{left:0}.n2,.n4{right:0}}
+@media (max-width:480px){.n3,.n4{display:none}.phone.mini{width:250px}.phone.mini .screen{height:470px}.stage{min-height:480px}}
+
+/* ticker */
+.ticker{background:var(--ink);color:#fff;overflow:hidden;padding-block:16px;border-top:0}
+.ticker .track{display:flex;width:max-content;gap:28px;align-items:center;animation:tick 40s linear infinite}
+.ticker span{font-family:var(--f-display);font-size:1.05rem;font-weight:500;white-space:nowrap;text-transform:uppercase;letter-spacing:.02em}
+.ticker i{width:8px;height:8px;border-radius:50%;background:var(--accent);flex:none}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* colour blocks */
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.035;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+#muammo .big{font-size:clamp(3rem,7vw,5rem)}
+#demo{background:radial-gradient(600px 600px at 15% 60%,rgba(196,30,58,.35),transparent 70%),radial-gradient(circle,rgba(255,255,255,.08) 1px,transparent 1.5px) 0 0/22px 22px,var(--ink);color:#fff;border-top:0}
+#demo .sec-head .muted{color:rgba(255,255,255,.72)}
+#demo .eyebrow{color:#FF8FA0}
+#demo .phone{border:1px solid rgba(255,255,255,.18)}
+#demo .panel,#demo .screen{color:var(--ink)}
+#xavfsizlik{background:var(--surface)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.tag{font-family:var(--f-mono);font-size:.72rem;padding:4px 8px;border:1px solid var(--line);border-radius:6px;color:var(--muted);background:var(--bg)}
+.pillars > div{transition:background .2s ease}
+.pillars > div:hover{background:color-mix(in srgb,var(--accent) 4%,var(--surface))}
+.pillars .ico{width:40px;height:40px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center}
+.pillars .ico svg{width:22px;height:22px}
+
+/* problem */
+.prob{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.prob > div{display:grid;gap:8px;align-content:start}
+.big{font-family:var(--f-display);font-size:2.6rem;color:var(--accent);line-height:1}
+@media (max-width:820px){.prob{grid-template-columns:1fr}}
+
+/* pillars & steps */
+.pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.pillars > div{background:var(--surface);padding:24px;display:grid;gap:10px;align-content:start}
+.pillars h3{font-size:1.1rem}
+@media (max-width:820px){.pillars{grid-template-columns:1fr}}
+.steps{list-style:none;padding:0;margin:40px 0 0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;counter-reset:s}
+.steps li{counter-increment:s;display:grid;gap:6px;align-content:start;padding-top:14px;border-top:2px solid var(--ink)}
+.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.8rem;color:var(--accent)}
+.steps b{font-weight:600}
+.steps span{font-size:.95rem;color:var(--muted)}
+@media (max-width:900px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.steps{grid-template-columns:1fr}}
+
+/* demo */
+.demo-note{display:inline-block;font-size:.85rem;background:var(--warn-soft);color:var(--warn);padding:6px 10px;border-radius:8px;margin-top:4px}
+.demo{display:grid;grid-template-columns:360px minmax(0,1fr);gap:40px;align-items:start}
+@media (max-width:960px){.demo{grid-template-columns:1fr;justify-items:center}.panel{width:100%}}
+.phone{width:min(360px,100%);border-radius:40px;background:var(--phone);padding:12px;box-shadow:0 24px 60px -24px rgba(0,0,0,.45)}
+.screen{background:var(--bg);border-radius:30px;overflow:hidden;height:680px;display:flex;flex-direction:column}
+.sbar{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:.7rem;padding:12px 22px 6px;color:var(--muted)}
+.app{flex:1;overflow-y:auto;padding:8px 16px 16px;display:grid;gap:14px;align-content:start}
+.tabbar{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line);background:var(--surface)}
+.tabbar button{border:0;background:none;color:var(--muted);padding:9px 2px 12px;font-size:.7rem;display:grid;justify-items:center;gap:3px}
+.tabbar button svg{width:20px;height:20px}
+.tabbar button[aria-selected="true"]{color:var(--accent)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:8px}
+.hello{display:flex;justify-content:space-between;align-items:center}
+.hello h3{font-size:1rem}
+.avatar{width:36px;height:36px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-weight:600;font-size:.85rem}
+.next{background:var(--ink);color:var(--bg);border:0}
+.next .muted{color:color-mix(in srgb,var(--bg) 70%,var(--ink))}
+.next .d{font-family:var(--f-display);font-size:1.6rem}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.chip{font-size:.7rem;font-weight:600;padding:3px 8px;border-radius:99px;white-space:nowrap}
+.c-good{background:var(--good-soft);color:var(--good)}
+.c-warn{background:var(--warn-soft);color:var(--warn)}
+.c-bad{background:var(--accent-soft);color:var(--accent)}
+.c-neu{background:var(--line);color:var(--ink)}
+.list{display:grid;gap:0}
+.list > div{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.88rem}
+.list > div:last-child{border-bottom:0}
+.small{font-size:.86rem}
+.abtn{border:0;border-radius:10px;background:var(--accent);color:#fff;padding:11px;font-weight:600;font-size:.9rem;width:100%}
+.abtn.sec{background:var(--line);color:var(--ink)}
+.qr{display:grid;justify-items:center;gap:10px;padding:18px}
+.qr canvas{width:180px;height:180px;image-rendering:pixelated;background:#fff;border-radius:8px;padding:8px}
+.success{text-align:center;padding:22px 14px;background:var(--good-soft);border-color:transparent}
+.success .big{color:var(--good);font-size:1.6rem}
+.res-v{font-family:var(--f-mono);font-size:.85rem}
+.bar{height:6px;border-radius:3px;background:var(--line);position:relative}
+.bar i{position:absolute;top:-3px;width:12px;height:12px;border-radius:50%;border:2px solid var(--surface)}
+.bar s{position:absolute;top:0;bottom:0;background:var(--good-soft);border-radius:3px}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:99px;padding:5px 11px;font-size:.78rem}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.meal{display:grid;grid-template-columns:72px 1fr;gap:8px;font-size:.86rem;padding:8px 0;border-bottom:1px solid var(--line)}
+.meal:last-child{border-bottom:0}
+.meal b{font-family:var(--f-mono);font-size:.7rem;font-weight:500;color:var(--muted);text-transform:uppercase;padding-top:2px}
+.glasses{display:flex;gap:6px;flex-wrap:wrap}
+.glasses button{width:28px;height:34px;border:1.5px solid var(--line);border-radius:4px 4px 8px 8px;background:var(--surface);padding:0}
+.glasses button.on{background:color-mix(in srgb,#3B82C4 55%,var(--surface));border-color:#3B82C4}
+.prod{display:grid;gap:6px}
+.prod button{display:flex;justify-content:space-between;align-items:center;text-align:left;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:9px 11px;font-size:.84rem}
+.prod button .code{font-family:var(--f-mono);font-size:.68rem;color:var(--muted)}
+.verdict{border-width:2px}
+.ai{font-family:var(--f-mono);font-size:.72rem;color:var(--muted)}
+
+/* clinic panel */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;min-width:0}
+.ptabs{display:flex;border-bottom:1px solid var(--line);overflow-x:auto}
+.ptabs button{border:0;background:none;color:var(--muted);padding:14px 18px;font-weight:600;font-size:.9rem;border-bottom:2px solid transparent;white-space:nowrap}
+.ptabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.pbody{padding:20px;display:grid;gap:18px}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.kpi{border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:2px}
+.kpi b{font-family:var(--f-display);font-size:1.4rem;font-weight:500}
+.kpi span{font-size:.84rem;color:var(--muted)}
+@media (max-width:600px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th{text-align:left;font-weight:600;color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.04em;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr.me td{background:var(--accent-soft)}
+tr.flash td{animation:flash 1.4s ease}
+@keyframes flash{0%{background:var(--good-soft)}100%{background:transparent}}
+.mini{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:5px 9px;font-size:.78rem;white-space:nowrap}
+.mini:disabled{opacity:.45;cursor:default}
+.rank{display:grid;gap:10px}
+.rk{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,2fr) 64px;gap:12px;align-items:center;font-size:.88rem}
+.rk .track{height:10px;background:var(--line);border-radius:5px;overflow:hidden}
+.rk .track i{display:block;height:100%;background:var(--ink);border-radius:5px}
+.rk .track i.top{background:var(--accent)}
+.bonus{font-family:var(--f-mono);font-size:.85rem;text-align:right}
+@media (max-width:600px){.rk{grid-template-columns:1fr 56px}.rk .track{grid-column:1/-1;order:3}}
+.formula{font-family:var(--f-mono);font-size:.8rem;background:var(--bg);border-radius:10px;padding:12px;overflow-x:auto}
+
+/* comparison, business, roadmap, team */
+.cmp td:not(:first-child),.cmp th:not(:first-child){text-align:center}
+.cmp td.us{background:var(--accent-soft);font-weight:600}
+.yes{color:var(--good);font-weight:700}.no{color:var(--muted)}
+.biz{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.biz > div{border:1px solid var(--line);border-radius:14px;padding:20px;display:grid;gap:8px;align-content:start;background:var(--surface)}
+.biz .who{font-family:var(--f-mono);font-size:.72rem;color:var(--accent);text-transform:uppercase;letter-spacing:.06em}
+@media (max-width:720px){.biz{grid-template-columns:1fr}}
+.road{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:2px solid var(--ink)}
+.road > div{padding:16px 16px 0 0;display:grid;gap:6px;align-content:start;position:relative}
+.road > div::before{content:"";position:absolute;top:-7px;left:0;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--ink)}
+.road > div.now::before{background:var(--accent);border-color:var(--accent)}
+.road .when{font-family:var(--f-mono);font-size:.78rem;color:var(--muted);padding-top:8px}
+.road ul{margin:0;padding-left:18px;font-size:.95rem;color:var(--muted);display:grid;gap:4px}
+@media (max-width:820px){.road{grid-template-columns:1fr;border-top:0;border-left:2px solid var(--ink);gap:20px}.road > div{padding:0 0 0 22px}.road > div::before{top:2px;left:-7px}}
+.team{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;max-width:720px}
+.member{display:flex;gap:16px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:18px;background:var(--surface)}
+.member .avatar{width:56px;height:56px;flex:none;aspect-ratio:1;font-family:var(--f-display);font-size:1rem;letter-spacing:-.02em;background:var(--accent);color:#fff}
+@media (max-width:600px){.team{grid-template-columns:1fr}}
+/* footer: closing call to action on pomegranate */
+footer{background:var(--accent);color:#fff;padding-block:72px 28px;position:relative;overflow:hidden;isolation:isolate}
+footer::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(700px 400px at 85% 0%,rgba(255,255,255,.18),transparent 70%),radial-gradient(600px 400px at 0% 100%,var(--accent-deep),transparent 70%)}
+footer .wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:40px;container-type:inline-size}
+.closing{display:grid;grid-template-columns:minmax(0,1.3fr) auto;gap:28px;align-items:end}
+.closing h2{font-size:clamp(1.9rem,4.4vw,3.2rem);color:#fff}
+.closing p{color:rgba(255,255,255,.88);margin-top:12px;max-width:520px}
+.closing .cta{margin-top:0}
+footer .btn{background:#fff;color:var(--accent);border-color:#fff}
+footer .btn.ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.6)}
+.fcols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;padding-top:28px;border-top:1px solid rgba(255,255,255,.25);font-size:.95rem}
+.fcols h4{margin:0 0 10px;font-family:var(--f-mono);font-size:.74rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.75)}
+.fcols ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.fcols a{color:#fff;text-decoration:none}
+.fcols a:hover{text-decoration:underline}
+.wordmark{font-family:var(--f-display);font-weight:700;font-size:10.2cqi;line-height:.85;letter-spacing:-.04em;color:rgba(255,255,255,.95);white-space:nowrap;overflow:hidden}
+.wordmark b{color:var(--accent-deep)}
+.fnote{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:.84rem;color:rgba(255,255,255,.82)}
+.fnote p{max-width:720px}
+@media (max-width:720px){.closing{grid-template-columns:1fr}.fcols{grid-template-columns:1fr 1fr}}
+.road > div.done::before{background:var(--ink)}
+.member .role{font-weight:600;font-size:.9rem;color:var(--accent);margin:2px 0 4px}
+.member{align-items:flex-start}
+.why{margin-top:48px;display:grid;gap:20px}
+.why > h3{font-family:var(--f-display);font-size:clamp(1.3rem,2.6vw,1.7rem);font-weight:700}
+.stack td:first-child{white-space:nowrap}
+.stack td{font-size:.95rem}
+html{scroll-behavior:smooth}
+section[id]{scroll-margin-top:64px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}.ecg circle{display:none}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#top">SALOMAT <b>360</b></a>
+    <nav class="nav">
+      <a href="#muammo"><span class="uz">Muammo</span><span class="ru">Проблема</span></a>
+      <a href="#yechim"><span class="uz">Yechim</span><span class="ru">Решение</span></a>
+      <a href="#demo"><span class="uz">Demo</span><span class="ru">Демо</span></a>
+      <a href="#xavfsizlik"><span class="uz">Xavfsizlik</span><span class="ru">Безопасность</span></a>
+      <a href="#biznes"><span class="uz">Biznes model</span><span class="ru">Бизнес-модель</span></a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="/demo"><b style="color:var(--accent)"><span class="uz">Demo video</span><span class="ru">Демо-видео</span></b></a>
+      <a href="#jamoa"><span class="uz">Jamoa</span><span class="ru">Команда</span></a>
+    </nav>
+    <div class="lang" role="group" aria-label="Til / Язык">
+      <button id="btn-uz" aria-pressed="true" data-lang="uz">UZ</button>
+      <button id="btn-ru" aria-pressed="false" data-lang="ru">RU</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">HealthTech · Pitch Day 3.0</p>
+      <h1 style="margin-top:16px">
+        <span class="uz">Kasallikni kutmang. <em>Sog‘lig‘ingizni</em> bugun tekshiring.</span>
+        <span class="ru">Не ждите болезни. <em>Проверьте здоровье</em> сегодня.</span>
+      </h1>
+      <p class="lead">
+        <span class="uz">SALOMAT 360 fuqaroni profilaktik ko‘rikka o‘zi chaqiradi, kelganini tasdiqlaydi va tahlil natijasiga qarab har kuni ovqatlanish va turmush tarzi bo‘yicha yordam beradi.</span>
+        <span class="ru">SALOMAT 360 сам приглашает гражданина на профосмотр, подтверждает визит и на основе анализов каждый день помогает с питанием и образом жизни.</span>
+      </p>
+      <div class="cta">
+        <a class="btn" href="#demo"><span class="uz">Prototipni sinab ko‘rish</span><span class="ru">Попробовать прототип</span> →</a>
+        <a class="btn ghost" href="#muammo"><span class="uz">Muammo va yechim</span><span class="ru">Проблема и решение</span></a>
+      </div>
+      <div class="quote">
+        <q><span class="uz">To‘rt yildan beri poliklinika meni bironta ham tekshiruvga chaqirmadi. Lekin jigarim, o‘t pufagim qanday ahvolda — bilmayman.</span><span class="ru">Четыре года поликлиника ни разу не пригласила меня на осмотр. Но в каком состоянии печень и желчный пузырь — не знаю.</span></q>
+        <small><span class="uz">— Loyiha muallifining shaxsiy tajribasi</span><span class="ru">— Личный опыт автора проекта</span></small>
+      </div>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <div class="phone mini">
+        <div class="screen">
+          <div class="sbar"><span>9:41</span><span>SALOMAT 360</span><span>5G</span></div>
+          <div class="app">
+            <div class="hello"><div><p class="small muted"><span class="uz">Assalomu alaykum,</span><span class="ru">Здравствуйте,</span></p><h3>Aziz Karimov</h3></div><div class="avatar">AK</div></div>
+            <div class="card next"><span class="small muted"><span class="uz">Profilaktik ko‘rik vaqti keldi</span><span class="ru">Подошёл срок профосмотра</span></span><div class="d"><span class="uz">Bugun, 10:30</span><span class="ru">Сегодня, 10:30</span></div><span class="abtn"><span class="uz">Kelganimni tasdiqlash</span><span class="ru">Подтвердить визит</span></span></div>
+            <div class="card"><b class="small"><span class="uz">Bugungi menyu</span><span class="ru">Меню на сегодня</span></b>
+              <div class="meal"><b><span class="uz">Nonushta</span><span class="ru">Завтрак</span></b><span><span class="uz">Suli bo‘tqasi, olma</span><span class="ru">Овсянка, яблоко</span></span></div>
+              <div class="meal"><b><span class="uz">Tushlik</span><span class="ru">Обед</span></b><span><span class="uz">Tovuqli sho‘rva</span><span class="ru">Куриный суп</span></span></div>
+            </div>
+            <div class="card"><div class="row"><b class="small"><span class="uz">Suv</span><span class="ru">Вода</span></b><span class="res-v">1250 / 2000 ml</span></div><div class="bar"><s style="left:0;width:62%"></s></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="note n1"><i class="dot" style="background:var(--accent)"></i><div><b><span class="uz">Ko‘rik vaqti keldi</span><span class="ru">Пора на осмотр</span></b><span><span class="uz">Bugun 10:30 · «A» poliklinika</span><span class="ru">Сегодня 10:30 · Поликлиника «А»</span></span></div></div>
+      <div class="note n2"><i class="dot" style="background:var(--good)"></i><div><b><span class="uz">Barakalla!</span><span class="ru">Молодец!</span></b><span><span class="uz">Ko‘rikdan o‘tdingiz ✓</span><span class="ru">Осмотр пройден ✓</span></span></div></div>
+      <div class="note n3"><i class="dot" style="background:var(--warn)"></i><div><b><span class="uz">Glyukoza 6,3 mmol/L</span><span class="ru">Глюкоза 6,3 ммоль/л</span></b><span><span class="uz">Endokrinologga yozildingiz</span><span class="ru">Вы записаны к эндокринологу</span></span></div></div>
+      <div class="note n4"><i class="dot" style="background:#3B82C4"></i><div><b><span class="uz">Gazli ichimlik: cheklang</span><span class="ru">Газировка: ограничьте</span></b><span><span class="uz">Muqobil: limonli suv</span><span class="ru">Замена: вода с лимоном</span></span></div></div>
+    </div>
+  </div>
+  <div class="wrap"><svg class="ecg" id="ecg" viewBox="0 0 1200 70" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg></div>
+</section>
+
+<div class="ticker" aria-hidden="true"><div class="track" id="ticker"></div></div>
+
+<section id="muammo">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow"><span class="uz">Muammo</span><span class="ru">Проблема</span></p>
+      <h2><span class="uz">Xizmat bor, lekin fuqaro bilan aloqa yo‘q</span><span class="ru">Услуга есть, но связи с гражданином нет</span></h2>
+      <p class="muted"><span class="uz">O‘zbekistonda profilaktik ko‘riklar va skrining kalendari rasmiy xizmat sifatida mavjud. Ammo odamni vaqtida chaqiradigan, kelmaganini kuzatadigan va natijadan keyin qo‘llab-quvvatlaydigan uzluksiz jarayon yo‘q.</span><span class="ru">В Узбекистане профилактические осмотры и календарь скринингов существуют как официальная услуга. Но нет непрерывного процесса, который вовремя приглашает человека, отслеживает неявку и поддерживает его после получения результатов.</span></p>
+    </div>
+    <div class="prob">
+      <div>
+        <div class="big">74%</div>
+        <p><span class="uz">Dunyodagi o‘limlarning taxminan 74 foizi yuqumli bo‘lmagan kasalliklar (yurak-qon tomir, saraton, diabet) hissasiga to‘g‘ri keladi. Ularning ko‘pini erta aniqlash va turmush tarzi bilan oldini olish mumkin.</span><span class="ru">Около 74% смертей в мире приходится на неинфекционные заболевания (сердечно-сосудистые, рак, диабет). Многие из них можно выявить рано и предотвратить через образ жизни.</span></p>
+        <small class="muted"><span class="uz">Manba: JSST (WHO)</span><span class="ru">Источник: ВОЗ</span></small>
+      </div>
+      <div>
+        <div class="big">3</div>
+        <p><span class="uz">ta uzilish: <b>chaqiruv</b> (fuqaroga ko‘rik vaqti kelgani aytilmaydi), <b>kelish</b> (eslatma va rag‘bat yo‘q), <b>kuzatuv</b> (natijadan keyin nima qilishni hech kim aytmaydi).</span><span class="ru">разрыва: <b>приглашение</b> (гражданину не сообщают о сроке осмотра), <b>явка</b> (нет напоминаний и мотивации), <b>сопровождение</b> (после анализов никто не говорит, что делать дальше).</span></p>
+      </div>
+      <div>
+        <div class="big">0</div>
+        <p><span class="uz">ta bog‘lanish tahlil natijasi bilan kundalik hayot o‘rtasida. Qondagi qand yuqori chiqdi — lekin do‘konda qaysi mahsulotni olish, nima pishirish kerakligini hech kim ko‘rsatmaydi.</span><span class="ru">связей между результатом анализа и повседневной жизнью. Сахар в крови повышен — но никто не подскажет, что купить в магазине и что приготовить.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="yechim">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow"><span class="uz">Yechim</span><span class="ru">Решение</span></p>
+      <h2><span class="uz">Tekshiruvdan kundalik sog‘liqqacha bitta tizim</span><span class="ru">Одна система — от осмотра до ежедневного здоровья</span></h2>
+    </div>
+    <div class="pillars">
+      <div>
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M9 15l2 2 4-4"/></svg></div>
+        <p class="eyebrow"><span class="uz">Erta aniqlash</span><span class="ru">Раннее выявление</span></p>
+        <h3><span class="uz">Shaxsiy profilaktik kalendar</span><span class="ru">Персональный профилактический календарь</span></h3>
+        <p class="muted"><span class="uz">Yosh, jins va xavf omillariga qarab qaysi tekshiruv qachon kerakligi belgilanadi. Ilova eslatadi, QR-kod bilan kelish tasdiqlanadi, “Barakalla!” xabari keladi.</span><span class="ru">По возрасту, полу и факторам риска определяется, какие обследования и когда нужны. Приложение напоминает, визит подтверждается QR-кодом, приходит сообщение «Молодец!».</span></p>
+      </div>
+      <div>
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v6a4 4 0 0 0 8 0V3M10 13v3a5 5 0 0 0 10 0v-2"/><circle cx="20" cy="12" r="2"/></svg></div>
+        <p class="eyebrow"><span class="uz">Kuzatuv</span><span class="ru">Сопровождение</span></p>
+        <h3><span class="uz">Shifokor va yo‘llanma</span><span class="ru">Врач и направление</span></h3>
+        <p class="muted"><span class="uz">Shifokor bitta oynada kim keldi, kim kelmadi va kim xavf guruhida ekanini ko‘radi. Poliklinikada mutaxassis bo‘lmasa, bemor roziligi bilan hamkor xususiy klinikaga yo‘naltiriladi.</span><span class="ru">Врач в одном окне видит, кто пришёл, кто нет и кто в группе риска. Если в поликлинике нет нужного специалиста, пациента с его согласия направляют в частную клинику-партнёр.</span></p>
+      </div>
+      <div>
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-5-3-8-7-8-11a5 5 0 0 1 8-4 5 5 0 0 1 8 4c0 4-3 8-8 11z"/><path d="M8 11h2l1-2 2 4 1-2h2"/></svg></div>
+        <p class="eyebrow"><span class="uz">Oldini olish</span><span class="ru">Профилактика</span></p>
+        <h3><span class="uz">Natijaga mos menyu va mahsulot skaneri</span><span class="ru">Меню по результатам и сканер продуктов</span></h3>
+        <p class="muted"><span class="uz">Shifokor tasdiqlagan natijalar asosida AI shaxsiy menyu, suv va kun tartibi tuzadi. Do‘konda shtrix-kodni skanerlasangiz, mahsulot sizga mosmi yoki yo‘qmi aytadi.</span><span class="ru">На основе подтверждённых врачом результатов ИИ составляет личное меню, режим воды и дня. В магазине сканируете штрихкод — и видите, подходит ли продукт именно вам.</span></p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><b><span class="uz">Eslatma</span><span class="ru">Напоминание</span></b><span><span class="uz">Ko‘rik vaqti keldi — ilova va SMS xabar</span><span class="ru">Пришёл срок осмотра — push и SMS</span></span></li>
+      <li><b><span class="uz">Tasdiq</span><span class="ru">Подтверждение</span></b><span><span class="uz">Poliklinikada QR-kod skanerlanadi</span><span class="ru">В поликлинике сканируется QR-код</span></span></li>
+      <li><b><span class="uz">Natija</span><span class="ru">Результат</span></b><span><span class="uz">Shifokor tasdiqlagan tahlillar ilovada</span><span class="ru">Подтверждённые врачом анализы в приложении</span></span></li>
+      <li><b><span class="uz">Reja</span><span class="ru">План</span></b><span><span class="uz">Menyu, suv, kun tartibi, yo‘llanma</span><span class="ru">Меню, вода, режим дня, направление</span></span></li>
+      <li><b><span class="uz">Kundalik</span><span class="ru">Каждый день</span></b><span><span class="uz">Do‘konda skaner, keyingi ko‘rik eslatmasi</span><span class="ru">Сканер в магазине, напоминание о следующем осмотре</span></span></li>
+    </ol>
+  </div>
+</section>
+
+<section id="demo">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow"><span class="uz">Ishlaydigan prototip</span><span class="ru">Рабочий прототип</span></p>
+      <h2><span class="uz">Fuqaro ilovasi va poliklinika paneli</span><span class="ru">Приложение гражданина и панель поликлиники</span></h2>
+      <p class="muted"><span class="uz">Ilovada QR-kod bilan kelishni tasdiqlang — shifokor panelida holat darhol o‘zgaradi. Natijalar, menyu va skanerni ham sinab ko‘ring.</span><span class="ru">Подтвердите визит QR-кодом в приложении — статус сразу изменится в панели врача. Попробуйте также результаты, меню и сканер.</span></p>
+      <span class="demo-note"><span class="uz">Demo: barcha bemorlar, tahlillar va poliklinikalar namunaviy, haqiqiy ma’lumot emas.</span><span class="ru">Демо: все пациенты, анализы и поликлиники вымышлены, это не реальные данные.</span></span>
+    </div>
+    <div class="demo">
+      <div class="phone" aria-label="SALOMAT 360 mobile app prototype">
+        <div class="screen">
+          <div class="sbar"><span>9:41</span><span>SALOMAT 360</span><span>5G</span></div>
+          <div class="app" id="app"></div>
+          <div class="tabbar" role="tablist" id="tabbar"></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="ptabs" role="tablist" id="ptabs"></div>
+        <div class="pbody" id="pbody"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="farq">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow"><span class="uz">Raqobat</span><span class="ru">Конкуренты</span></p>
+      <h2><span class="uz">Mavjud yechimlardan farqi</span><span class="ru">Отличие от существующих решений</span></h2>
+    </div>
+    <div class="tbl">
+      <table class="cmp">
+        <thead><tr><th></th><th><span class="uz">my.gov.uz ko‘rik kalendari</span><span class="ru">Календарь осмотров my.gov.uz</span></th><th><span class="uz">Fitnes / kaloriya ilovalari</span><span class="ru">Фитнес / калорийные приложения</span></th><th>SALOMAT 360</th></tr></thead>
+        <tbody id="cmp"></tbody>
+      </table>
+    </div>
+    <p class="muted small" style="margin-top:14px;max-width:720px"><span class="uz">“?” — ochiq manbalarda aniq ma’lumot topilmadi, tekshirilmoqda. my.gov.uz bilan raqobatlashish emas, uni to‘ldiruvchi modul sifatida integratsiya qilish maqsad qilingan.</span><span class="ru">«?» — в открытых источниках нет точных данных, уточняется. Цель — не конкурировать с my.gov.uz, а интегрироваться как дополняющий модуль.</span></p>
+  </div>
+</section>
+
+<section id="xavfsizlik">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow"><span class="uz">Xavfsizlik va huquqiy asos</span><span class="ru">Безопасность и право</span></p>
+      <h2><span class="uz">Tibbiy ma’lumot — eng sezgir ma’lumot</span><span class="ru">Медицинские данные — самые чувствительные</span></h2>
+      <p class="muted"><span class="uz">Pilot bosqichi uchun rejalashtirilgan talablar. Joriy demo versiyada haqiqiy shaxsiy ma’lumot ishlatilmaydi.</span><span class="ru">Требования, запланированные для пилота. В текущей демо-версии реальные персональные данные не используются.</span></p>
+    </div>
+    <div class="biz">
+      <div><h3><span class="uz">Ma’lumotlar O‘zbekistonda saqlanadi</span><span class="ru">Данные хранятся в Узбекистане</span></h3><p class="muted"><span class="uz">“Shaxsga doir ma’lumotlar to‘g‘risida”gi qonun talablariga muvofiq, fuqarolar ma’lumotlari O‘zbekiston hududidagi serverlarda saqlanadi va shifrlanadi.</span><span class="ru">В соответствии с Законом «О персональных данных» данные граждан хранятся на серверах на территории Узбекистана и шифруются.</span></p></div>
+      <div><h3><span class="uz">Faqat bemor roziligi bilan</span><span class="ru">Только с согласия пациента</span></h3><p class="muted"><span class="uz">Natijalar ilovaga va hamkor klinikaga faqat bemorning aniq roziligi bilan uzatiladi. Bemor o‘z ma’lumotini kim va qachon ko‘rganini ilovada ko‘radi.</span><span class="ru">Результаты передаются в приложение и клинику-партнёр только с явного согласия пациента. Пациент видит в приложении, кто и когда открывал его данные.</span></p></div>
+      <div><h3><span class="uz">Biometrika yig‘ilmaydi</span><span class="ru">Без биометрии</span></h3><p class="muted"><span class="uz">Kelishni tasdiqlash uchun Face ID emas, bir martalik QR-kod ishlatiladi. Faqat zarur minimal ma’lumot to‘planadi.</span><span class="ru">Для подтверждения визита используется одноразовый QR-код, а не Face ID. Собирается только необходимый минимум данных.</span></p></div>
+      <div><h3><span class="uz">AI tashxis qo‘ymaydi</span><span class="ru">ИИ не ставит диагноз</span></h3><p class="muted"><span class="uz">Menyu va tavsiyalar faqat shifokor tasdiqlagan natijalar va klinik ko‘rsatmalar asosida tuziladi. Yakuniy qaror har doim shifokorda.</span><span class="ru">Меню и рекомендации строятся только на подтверждённых врачом результатах и клинических рекомендациях. Решение всегда за врачом.</span></p></div>
+    </div>
+  </div>
+</section>
+
+<section id="biznes">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow"><span class="uz">Biznes model</span><span class="ru">Бизнес-модель</span></p>
+      <h2><span class="uz">Fuqaro uchun bepul. Tizim uchun to‘lovchi bor.</span><span class="ru">Бесплатно для граждан. Платит система.</span></h2>
+    </div>
+    <div class="biz">
+      <div><p class="who">B2G</p><h3><span class="uz">Davlat poliklinikalari</span><span class="ru">Государственные поликлиники</span></h3><p class="muted"><span class="uz">Sog‘liqni saqlash tizimi yoki hokimliklar uchun poliklinika boshiga oylik SaaS litsenziya. Pilotdan keyin davlat-xususiy sheriklik asosida.</span><span class="ru">Ежемесячная SaaS-лицензия за поликлинику для системы здравоохранения или хокимиятов. После пилота — на основе ГЧП.</span></p></div>
+      <div><p class="who">B2B</p><h3><span class="uz">Xususiy klinikalar</span><span class="ru">Частные клиники</span></h3><p class="muted"><span class="uz">Hamkor klinikalar platformadan yo‘llanma oladi. Har bir amalga oshgan qabul uchun komissiya yoki oylik hamkorlik to‘lovi.</span><span class="ru">Клиники-партнёры получают направления через платформу. Комиссия за состоявшийся приём или ежемесячный партнёрский взнос.</span></p></div>
+      <div><p class="who">B2B</p><h3><span class="uz">Ish beruvchilar</span><span class="ru">Работодатели</span></h3><p class="muted"><span class="uz">Kompaniyalar xodimlari uchun korporativ profilaktika dasturi: kamroq kasallik varaqasi, sog‘lomroq jamoa.</span><span class="ru">Корпоративная программа профилактики для сотрудников: меньше больничных, здоровее команда.</span></p></div>
+      <div><p class="who"><span class="uz">Grant</span><span class="ru">Гранты</span></p><h3><span class="uz">Xalqaro fondlar</span><span class="ru">Международные фонды</span></h3><p class="muted"><span class="uz">Raqamli sog‘liqni saqlash va yuqumli bo‘lmagan kasalliklar profilaktikasi bo‘yicha grantlar pilot bosqichini moliyalashtiradi.</span><span class="ru">Гранты на цифровое здравоохранение и профилактику НИЗ финансируют пилотный этап.</span></p></div>
+    </div>
+    <p class="muted" style="margin-top:20px;max-width:720px"><span class="uz">Poliklinikalar uchun rag‘bat: qamrov, xavf guruhini kuzatish va bemor bahosiga qarab 10–30% ustama. Bu loyiha taklifi; amalga oshishi uchun alohida huquqiy asos kerak.</span><span class="ru">Стимул для поликлиник: надбавка 10–30% в зависимости от охвата, наблюдения группы риска и оценки пациентов. Это предложение проекта; для внедрения нужна отдельная правовая база.</span></p>
+  </div>
+</section>
+
+<section id="roadmap">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow"><span class="uz">Yo‘l xaritasi</span><span class="ru">Дорожная карта</span></p>
+      <h2><span class="uz">Biz hozir Prototype bosqichidamiz</span><span class="ru">Сейчас мы на стадии Prototype</span></h2>
+    </div>
+    <div class="road">
+      <div class="done"><p class="when">Idea · 2026 IX</p><h3>Idea ✓</h3><ul><li><span class="uz">Muammo aniqlandi</span><span class="ru">Проблема определена</span></li><li><span class="uz">Yechim konsepsiyasi</span><span class="ru">Концепция решения</span></li><li><span class="uz">Raqobat tahlili</span><span class="ru">Анализ конкурентов</span></li></ul></div>
+      <div class="now"><p class="when">Prototype · 2026 X</p><h3>Prototype ●</h3><ul><li><span class="uz">Ishlaydigan veb-prototip</span><span class="ru">Рабочий веб-прототип</span></li><li><span class="uz">Fuqaro ilovasi va shifokor paneli</span><span class="ru">Приложение и панель врача</span></li><li><span class="uz">Pitch Day 3.0</span><span class="ru">Pitch Day 3.0</span></li></ul></div>
+      <div><p class="when">MVP · 2027 I–II</p><h3>MVP</h3><ul><li><span class="uz">Flutter ilova + backend</span><span class="ru">Flutter-приложение + бэкенд</span></li><li><span class="uz">Haqiqiy AI menyu (LLM API)</span><span class="ru">Реальное ИИ-меню (LLM API)</span></li><li><span class="uz">2–3 poliklinikada pilot</span><span class="ru">Пилот в 2–3 поликлиниках</span></li></ul></div>
+      <div><p class="when">Launched · 2027 III+</p><h3>Launched</h3><ul><li><span class="uz">Tibbiy tizimlar bilan integratsiya</span><span class="ru">Интеграция с медсистемами</span></li><li><span class="uz">Viloyat, keyin respublika</span><span class="ru">Область, затем вся страна</span></li><li><span class="uz">Xususiy klinikalar, korporativ dastur</span><span class="ru">Частные клиники, корп. программа</span></li></ul></div>
+    </div>
+  </div>
+</section>
+<section id="texnologiya">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow"><span class="uz">Amalga oshirish</span><span class="ru">Реализация</span></p>
+      <h2><span class="uz">Qanday quramiz: bosqichlar, texnologiyalar, AI</span><span class="ru">Как строим: этапы, технологии, ИИ</span></h2>
+    </div>
+    <div class="tbl"><table class="stack">
+      <thead><tr><th><span class="uz">Qism</span><span class="ru">Часть</span></th><th><span class="uz">Hozir (prototip)</span><span class="ru">Сейчас (прототип)</span></th><th><span class="uz">MVP va keyin</span><span class="ru">MVP и далее</span></th></tr></thead>
+      <tbody>
+        <tr><td><b><span class="uz">Fuqaro ilovasi</span><span class="ru">Приложение гражданина</span></b></td><td>HTML, CSS, JavaScript</td><td>Flutter (Android / iOS)</td></tr>
+        <tr><td><b><span class="uz">Shifokor va poliklinika paneli</span><span class="ru">Панель врача и поликлиники</span></b></td><td>HTML, CSS, JavaScript</td><td><span class="uz">Veb-panel, rolga asoslangan kirish</span><span class="ru">Веб-панель, ролевой доступ</span></td></tr>
+        <tr><td><b>Backend</b></td><td>—</td><td>Python (FastAPI), PostgreSQL, <span class="uz">O‘zbekistondagi server</span><span class="ru">сервер в Узбекистане</span></td></tr>
+        <tr><td><b><span class="uz">AI menyu va tavsiyalar</span><span class="ru">ИИ-меню и рекомендации</span></b></td><td><span class="uz">Qoidaga asoslangan namuna</span><span class="ru">Пример на правилах</span></td><td><span class="uz">LLM API (Claude) + shifokor tasdiqlaydigan qoidalar</span><span class="ru">LLM API (Claude) + правила, утверждённые врачом</span></td></tr>
+        <tr><td><b><span class="uz">Mahsulot skaneri</span><span class="ru">Сканер продуктов</span></b></td><td><span class="uz">Namunaviy ro‘yxat</span><span class="ru">Демо-список</span></td><td><span class="uz">Shtrix-kod + yorliqni OCR orqali o‘qish</span><span class="ru">Штрихкод + OCR этикетки</span></td></tr>
+        <tr><td><b><span class="uz">Eslatmalar</span><span class="ru">Напоминания</span></b></td><td><span class="uz">Ilova ichida</span><span class="ru">Внутри приложения</span></td><td><span class="uz">Push (Firebase) va SMS</span><span class="ru">Push (Firebase) и SMS</span></td></tr>
+        <tr><td><b><span class="uz">Joylashtirish</span><span class="ru">Хостинг</span></b></td><td>Vercel</td><td><span class="uz">Mahalliy data-markaz</span><span class="ru">Локальный дата-центр</span></td></tr>
+      </tbody></table></div>
+    <p class="muted" style="margin-top:16px;max-width:760px"><span class="uz">AI vositalari: prototip interfeysi va kodi Claude (AI yordamchi) bilan birga yaratildi. G‘oya, muammo tahlili, funksiyalar tanlovi va mahsulot qarorlari jamoaga tegishli.</span><span class="ru">ИИ-инструменты: интерфейс и код прототипа созданы вместе с Claude (ИИ-ассистент). Идея, анализ проблемы, выбор функций и продуктовые решения принадлежат команде.</span></p>
+  </div>
+</section>
+
+<section id="jamoa">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow"><span class="uz">Jamoa</span><span class="ru">Команда</span></p>
+      <h2><span class="uz">Biz kimmiz</span><span class="ru">Кто мы</span></h2>
+    </div>
+    <div class="team">
+      <div class="member"><div class="avatar">SO</div><div><h3>Saidova Oysha</h3><p class="role"><span class="uz">Hammuassis · loyiha menejeri</span><span class="ru">Сооснователь · проджект-менеджер</span></p><p class="muted small"><span class="uz">Ko‘nikmalar: loyihani rejalashtirish va boshqarish, muddatlar nazorati, jamoa va hamkorlar bilan ishlash, taqdimot</span><span class="ru">Навыки: планирование и управление проектом, контроль сроков, работа с командой и партнёрами, презентация</span></p></div></div>
+      <div class="member"><div class="avatar">SD</div><div><h3>Saidov Dilshod</h3><p class="role"><span class="uz">Hammuassis · dasturchi</span><span class="ru">Сооснователь · разработчик</span></p><p class="muted small"><span class="uz">Ko‘nikmalar: Flutter mobil ilovalar, Python, Telegram botlar, AI integratsiya</span><span class="ru">Навыки: мобильные приложения на Flutter, Python, Telegram-боты, интеграция ИИ</span></p></div></div>
+    </div>
+    <p class="muted small" style="margin-top:14px"><span class="uz">Havolalar</span><span class="ru">Ссылки</span>: <a href="https://salomat360.vercel.app">salomat360.vercel.app</a> · <a href="/demo">/demo</a></p>
+    <div class="why">
+      <h3><span class="uz">Nega aynan biz bu muammoni hal qila olamiz</span><span class="ru">Почему именно мы решим эту проблему</span></h3>
+      <div class="biz">
+        <div><h3><span class="uz">Muammoni o‘zimiz boshdan kechirganmiz</span><span class="ru">Мы сами столкнулись с проблемой</span></h3><p class="muted"><span class="uz">4 yil davomida bironta chaqiruv olmaganmiz. Foydalanuvchi qayerda qiynalishini ichkaridan bilamiz.</span><span class="ru">4 года без единого приглашения. Мы знаем изнутри, где пользователь теряется.</span></p></div>
+        <div><h3><span class="uz">Ilova yaratish tajribasi</span><span class="ru">Опыт создания приложений</span></h3><p class="muted"><span class="uz">Flutter mobil ilovalar va Python Telegram botlarini ishlab chiqqanmiz. MVP ni o‘zimiz qura olamiz.</span><span class="ru">Мы разрабатывали мобильные приложения на Flutter и Telegram-боты на Python. MVP можем построить сами.</span></p></div>
+        <div><h3><span class="uz">AI bilan tez ishlaymiz</span><span class="ru">Быстро работаем с ИИ</span></h3><p class="muted"><span class="uz">AI vositalari bilan g‘oyadan ishlaydigan prototipgacha bir necha kunda keldik.</span><span class="ru">С ИИ-инструментами прошли путь от идеи до рабочего прототипа за несколько дней.</span></p></div>
+        <div><h3><span class="uz">Keyingi qadam: shifokor-maslahatchi</span><span class="ru">Следующий шаг: врач-консультант</span></h3><p class="muted"><span class="uz">MVP bosqichida jamoaga maslahatchi shifokorni jalb qilamiz va tavsiyalarni klinik ko‘rsatmalar bilan tekshiramiz.</span><span class="ru">На этапе MVP привлечём врача-консультанта и проверим рекомендации по клиническим протоколам.</span></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="closing">
+      <div>
+        <h2><span class="uz">Sog‘liq kutib turmaydi.</span><span class="ru">Здоровье не ждёт.</span></h2>
+        <p><span class="uz">SALOMAT 360 fuqaroni o‘z vaqtida ko‘rikka olib keladi va natijadan keyin ham yolg‘iz qoldirmaydi. Pilot uchun poliklinika va hamkorlarga ochiqmiz.</span><span class="ru">SALOMAT 360 вовремя приводит человека на осмотр и не оставляет одного после результатов. Открыты к пилоту с поликлиниками и партнёрами.</span></p>
+      </div>
+      <div class="cta">
+        <a class="btn" href="#demo"><span class="uz">Prototipni sinab ko‘rish</span><span class="ru">Попробовать прототип</span> →</a>
+        <a class="btn ghost" href="#top"><span class="uz">Boshiga qaytish</span><span class="ru">Наверх</span> ↑</a>
+      </div>
+    </div>
+    <div class="fcols">
+      <div><h4><span class="uz">Bo‘limlar</span><span class="ru">Разделы</span></h4><ul>
+        <li><a href="#muammo"><span class="uz">Muammo</span><span class="ru">Проблема</span></a></li>
+        <li><a href="#yechim"><span class="uz">Yechim</span><span class="ru">Решение</span></a></li>
+        <li><a href="#demo"><span class="uz">Demo</span><span class="ru">Демо</span></a></li>
+        <li><a href="#biznes"><span class="uz">Biznes model</span><span class="ru">Бизнес-модель</span></a></li></ul></div>
+      <div><h4><span class="uz">Jamoa</span><span class="ru">Команда</span></h4><ul>
+        <li>Saidova Oysha</li><li>Saidov Dilshod</li></ul></div>
+      <div><h4><span class="uz">Tanlov</span><span class="ru">Конкурс</span></h4><ul>
+        <li>Pitch Day 3.0 · AIFU</li><li>HealthTech</li><li><span class="uz">Toshkent, 2026</span><span class="ru">Ташкент, 2026</span></li></ul></div>
+    </div>
+    <div class="wordmark" aria-hidden="true">SALOMAT <b>360</b></div>
+    <div class="fnote">
+      <p><span class="uz">Prototipdagi tibbiy tavsiyalar namunaviy. Ilova tashxis qo‘ymaydi va shifokor o‘rnini bosmaydi.</span><span class="ru">Медицинские рекомендации в прототипе условны. Приложение не ставит диагноз и не заменяет врача.</span></p>
+      <span>© 2026 SALOMAT 360</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(() => {
+let lang = 'uz';
+try { if (localStorage.getItem('s360-lang') === 'ru') lang = 'ru'; } catch(e){}
+const t = o => (typeof o === 'string' ? o : o[lang]);
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------- shared demo state ---------- */
+const S = {
+  tab: 'home', ptab: 'doctor', day: 0, water: 3, product: null, filter: 'all',
+  checkedIn: false,
+  patients: [
+    { id:1, name:'Aziz Karimov', age:34, test:{uz:'Umumiy ko‘rik, qon tahlili',ru:'Общий осмотр, анализ крови'}, status:'due', risk:true, me:true },
+    { id:2, name:'Malika Yusupova', age:52, test:{uz:'Mammografiya, qon bosimi',ru:'Маммография, давление'}, status:'came', risk:false },
+    { id:3, name:'Bobur Rahimov', age:61, test:{uz:'EKG, glyukoza',ru:'ЭКГ, глюкоза'}, status:'missed', risk:true },
+    { id:4, name:'Dilnoza Ergasheva', age:45, test:{uz:'Qon bosimi, xolesterin',ru:'Давление, холестерин'}, status:'due', risk:false },
+    { id:5, name:'Sardor Toshmatov', age:40, test:{uz:'Umumiy ko‘rik',ru:'Общий осмотр'}, status:'missed', risk:false },
+    { id:6, name:'Gulnora Aliyeva', age:58, test:{uz:'Glyukoza, ko‘z tubi',ru:'Глюкоза, глазное дно'}, status:'came', risk:true },
+    { id:7, name:'Javohir Nazarov', age:29, test:{uz:'Umumiy ko‘rik',ru:'Общий осмотр'}, status:'due', risk:false },
+    { id:8, name:'Nodira Qodirova', age:66, test:{uz:'EKG, densitometriya',ru:'ЭКГ, денситометрия'}, status:'reminded', risk:true }
+  ]
+};
+const ST = {
+  due:{c:'c-neu',uz:'Bugun kutilmoqda',ru:'Ожидается сегодня'},
+  came:{c:'c-good',uz:'Keldi ✓',ru:'Пришёл ✓'},
+  missed:{c:'c-bad',uz:'Kelmadi',ru:'Не пришёл'},
+  reminded:{c:'c-warn',uz:'Eslatma yuborildi',ru:'Напоминание отправлено'}
+};
+
+/* ---------- phone app ---------- */
+const ICON = {
+  home:'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+  qr:'<path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h2v2h-2zM18 18h2v2h-2zM14 18h2v2h-2zM18 14h2v2h-2z"/>',
+  lab:'<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/>',
+  menu:'<path d="M5 3v8a3 3 0 0 0 6 0V3M8 3v18M17 3c-2 0-3 3-3 7h3v11"/>',
+  scan:'<path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M7 9v6M10 9v6M13 9v6M17 9v6"/>'
+};
+const TABS = [
+  ['home',{uz:'Asosiy',ru:'Главная'}],['qr',{uz:'Tasdiq',ru:'Визит'}],['lab',{uz:'Natijalar',ru:'Анализы'}],
+  ['menu',{uz:'Menyu',ru:'Меню'}],['scan',{uz:'Skaner',ru:'Сканер'}]
+];
+
+const RESULTS = [
+  { n:{uz:'Qon bosimi',ru:'Давление'}, v:'138/88', u:'mmHg', ref:'<130/85', st:'warn', pos:.66, lo:0, hi:.55 },
+  { n:{uz:'Glyukoza (och qoringa)',ru:'Глюкоза (натощак)'}, v:'6,3', u:'mmol/L', ref:'3,9–5,5', st:'bad', pos:.78, lo:.25, hi:.6 },
+  { n:{uz:'Umumiy xolesterin',ru:'Общий холестерин'}, v:'5,9', u:'mmol/L', ref:'<5,2', st:'warn', pos:.7, lo:0, hi:.6 },
+  { n:'ALT', v:'32', u:'U/L', ref:'<41', st:'good', pos:.45, lo:0, hi:.65 },
+  { n:{uz:'Gemoglobin',ru:'Гемоглобин'}, v:'148', u:'g/L', ref:'130–170', st:'good', pos:.45, lo:.25, hi:.75 },
+  { n:{uz:'Tana massasi indeksi',ru:'Индекс массы тела'}, v:'28,1', u:'kg/m²', ref:'18,5–24,9', st:'warn', pos:.72, lo:.2, hi:.55 }
+];
+const STC = { good:{c:'c-good',uz:'Me’yorida',ru:'В норме'}, warn:{c:'c-warn',uz:'Chegaraviy',ru:'Пограничный'}, bad:{c:'c-bad',uz:'Yuqori',ru:'Повышен'} };
+const COLOR = { good:'var(--good)', warn:'var(--warn)', bad:'var(--accent)' };
+
+const DAYS = [{uz:'Dushanba',ru:'Пн'},{uz:'Seshanba',ru:'Вт'},{uz:'Chorshanba',ru:'Ср'}];
+const MENU = [
+  [ {uz:'Shakarsiz suli bo‘tqasi, olma, ko‘k choy',ru:'Овсянка без сахара, яблоко, зелёный чай'},
+    {uz:'Tovuqli sho‘rva (kam tuz), javdar non, ko‘kat salati',ru:'Куриный суп (мало соли), ржаной хлеб, салат из зелени'},
+    {uz:'30 g yong‘oq, qatiq',ru:'30 г орехов, катык'},
+    {uz:'Grechka, bug‘da pishgan baliq, pomidor-bodring',ru:'Гречка, рыба на пару, помидоры-огурцы'} ],
+  [ {uz:'2 ta qaynatilgan tuxum, bodring, javdar non',ru:'2 варёных яйца, огурец, ржаной хлеб'},
+    {uz:'Kam yog‘li moshxo‘rda, achchiq-chuchuk salat',ru:'Машхурда с малым количеством масла, салат ачичук'},
+    {uz:'Nok, kefir',ru:'Груша, кефир'},
+    {uz:'Sabzavotli dimlama (kartoshkasiz), mol go‘shti',ru:'Овощная димлама (без картофеля), говядина'} ],
+  [ {uz:'Tvorog, yong‘oq, ko‘k choy',ru:'Творог, орехи, зелёный чай'},
+    {uz:'No‘xatli sabzavot sho‘rva, javdar non',ru:'Овощной суп с нутом, ржаной хлеб'},
+    {uz:'Olma, 30 g bodom',ru:'Яблоко, 30 г миндаля'},
+    {uz:'Bug‘da pishgan tovuq, guruch o‘rniga bulg‘ur, salat',ru:'Курица на пару, булгур вместо риса, салат'} ]
+];
+const SLOTS = [{uz:'Nonushta',ru:'Завтрак'},{uz:'Tushlik',ru:'Обед'},{uz:'Tamaddi',ru:'Перекус'},{uz:'Kechki',ru:'Ужин'}];
+const LIMIT = [
+  {uz:'Shirin gazli ichimlik va paketli sharbat',ru:'Сладкая газировка и пакетированные соки'},
+  {uz:'Kolbasa, sosiska — tuz va yog‘ ko‘p',ru:'Колбаса, сосиски — много соли и жира'},
+  {uz:'Oq non va shirinliklar — kamroq',ru:'Белый хлеб и сладости — меньше'},
+  {uz:'Palov — haftada 1 marta, kichik porsiya',ru:'Плов — 1 раз в неделю, маленькая порция'}
+];
+
+const PRODUCTS = [
+  { code:'4780000000011', n:{uz:'Shirin gazli ichimlik, 1 L',ru:'Сладкая газировка, 1 л'}, k:'bad',
+    why:{uz:'100 ml da ~10 g shakar. Glyukozangiz yuqori — cheklang.',ru:'~10 г сахара на 100 мл. Ваша глюкоза повышена — ограничьте.'},
+    alt:{uz:'Gazsiz suv, limonli suv, shakarsiz choy',ru:'Вода без газа, вода с лимоном, чай без сахара'} },
+  { code:'4780000000028', n:{uz:'Qatiq 2,5%',ru:'Катык 2,5%'}, k:'good',
+    why:{uz:'Qo‘shilgan shakar yo‘q, oqsil manbai. Rejangizga mos.',ru:'Без добавленного сахара, источник белка. Подходит вашему плану.'}, alt:null },
+  { code:'4780000000035', n:{uz:'Sosiska, 400 g',ru:'Сосиски, 400 г'}, k:'bad',
+    why:{uz:'100 g da ~2 g tuz va ko‘p to‘yingan yog‘. Qon bosimi va xolesterin uchun tavsiya etilmaydi.',ru:'~2 г соли на 100 г и много насыщенных жиров. Не рекомендуется при вашем давлении и холестерине.'},
+    alt:{uz:'Qaynatilgan tovuq, mol go‘shti, dukkaklilar',ru:'Варёная курица, говядина, бобовые'} },
+  { code:'4780000000042', n:{uz:'Javdar non',ru:'Ржаной хлеб'}, k:'good',
+    why:{uz:'Kletchatka ko‘p, qand sekin ko‘tariladi. Porsiyaga e’tibor bering.',ru:'Много клетчатки, сахар растёт медленнее. Следите за порцией.'}, alt:null },
+  { code:'4780000000059', n:{uz:'Shokoladli pechenye',ru:'Шоколадное печенье'}, k:'warn',
+    why:{uz:'Shakar va yog‘ ko‘p. Ba’zan, kichik porsiyada.',ru:'Много сахара и жира. Иногда и маленькой порцией.'},
+    alt:{uz:'Quritilgan meva (ozroq), yong‘oq',ru:'Сухофрукты (немного), орехи'} },
+  { code:'2000000000000', n:{uz:'Noma’lum mahsulot',ru:'Неизвестный продукт'}, k:'unk',
+    why:{uz:'Bazada tarkibi topilmadi. Ilova uni xavfsiz deb taxmin qilmaydi.',ru:'Состав не найден в базе. Приложение не считает его безопасным по умолчанию.'},
+    alt:{uz:'Yorliqni suratga oling — tarkib tekshiriladi',ru:'Сфотографируйте этикетку — состав будет проверен'} }
+];
+const PK = { good:{c:'c-good',uz:'Mos keladi',ru:'Подходит'}, warn:{c:'c-warn',uz:'Me’yorida',ru:'В меру'}, bad:{c:'c-bad',uz:'Cheklang',ru:'Ограничьте'}, unk:{c:'c-neu',uz:'Ma’lumot yo‘q',ru:'Нет данных'} };
+
+function renderTabbar(){
+  $('#tabbar').innerHTML = TABS.map(([k,l]) =>
+    `<button role="tab" id="tab-${k}" aria-selected="${S.tab===k}" data-tab="${k}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round">${ICON[k]}</svg>${t(l)}</button>`).join('');
+}
+
+function viewHome(){
+  const days = S.checkedIn ? 182 : 0;
+  return `
+  <div class="hello"><div><p class="small muted">${t({uz:'Assalomu alaykum,',ru:'Здравствуйте,'})}</p><h3>Aziz Karimov</h3></div><div class="avatar">AK</div></div>
+  ${S.checkedIn ? `
+    <div class="card success"><div class="big">${t({uz:'Barakalla!',ru:'Молодец!'})}</div><p class="small">${t({uz:'Bugun sog‘lig‘ingiz uchun muhim qadam tashladingiz. Natijalar shifokor tasdiqlagach ilovada chiqadi.',ru:'Сегодня вы сделали важный шаг для здоровья. Результаты появятся после подтверждения врачом.'})}</p></div>
+    <div class="card"><div class="row"><span class="small muted">${t({uz:'Keyingi ko‘rikkacha',ru:'До следующего осмотра'})}</span><span class="chip c-good">${days} ${t({uz:'kun',ru:'дн.'})}</span></div></div>`
+  : `
+    <div class="card next"><span class="small muted">${t({uz:'Profilaktik ko‘rik vaqti keldi',ru:'Подошёл срок профосмотра'})}</span>
+      <div class="d">${t({uz:'Bugun, 10:30',ru:'Сегодня, 10:30'})}</div>
+      <span class="small">${t({uz:'«A» poliklinika (demo) · 2-xona',ru:'Поликлиника «А» (демо) · каб. 2'})}</span>
+      <button class="abtn" data-go="qr">${t({uz:'Kelganimni tasdiqlash',ru:'Подтвердить визит'})}</button>
+    </div>`}
+  <div class="card"><div class="row"><b class="small">${t({uz:'Sizning profilaktik kalendaringiz',ru:'Ваш профилактический календарь'})}</b><span class="ai">34 ${t({uz:'yosh · erkak',ru:'года · муж.'})}</span></div>
+    <div class="list">
+      <div><span>${t({uz:'Qon bosimi',ru:'Давление'})}</span><span class="chip ${S.checkedIn?'c-good':'c-warn'}">${S.checkedIn?t({uz:'O‘tdi',ru:'Пройдено'}):t({uz:'Bugun',ru:'Сегодня'})}</span></div>
+      <div><span>${t({uz:'Qon tahlili: glyukoza, xolesterin',ru:'Анализ крови: глюкоза, холестерин'})}</span><span class="chip ${S.checkedIn?'c-good':'c-warn'}">${S.checkedIn?t({uz:'O‘tdi',ru:'Пройдено'}):t({uz:'Bugun',ru:'Сегодня'})}</span></div>
+      <div><span>${t({uz:'Qorin bo‘shlig‘i UTT',ru:'УЗИ брюшной полости'})}</span><span class="chip ${S.checkedIn?'c-good':'c-warn'}">${S.checkedIn?t({uz:'O‘tdi',ru:'Пройдено'}):t({uz:'Bugun',ru:'Сегодня'})}</span></div>
+      <div><span>${t({uz:'Stomatolog',ru:'Стоматолог'})}</span><span class="chip c-neu">${t({uz:'Mart 2027',ru:'Март 2027'})}</span></div>
+    </div></div>
+  <div class="card"><b class="small">${t({uz:'Bugungi maslahat',ru:'Совет дня'})}</b><p class="small muted">${t({uz:'Kuniga 30 daqiqa piyoda yurish qon bosimi va qand miqdoriga ijobiy ta’sir qiladi.',ru:'30 минут ходьбы в день положительно влияют на давление и уровень сахара.'})}</p></div>`;
+}
+
+function viewQR(){
+  if (S.checkedIn) return `<div class="card success"><div class="big">✓</div><b>${t({uz:'Kelishingiz tasdiqlandi',ru:'Визит подтверждён'})}</b><p class="small">${t({uz:'Bugun 10:27 · «A» poliklinika',ru:'Сегодня 10:27 · Поликлиника «А»'})}</p></div>
+    <p class="small muted" style="text-align:center">${t({uz:'Shifokor panelida holatingiz “Keldi” ga o‘zgardi →',ru:'В панели врача ваш статус сменился на «Пришёл» →'})}</p>`;
+  return `<div class="card qr"><b>${t({uz:'Registraturada ko‘rsating',ru:'Покажите в регистратуре'})}</b><canvas id="qrc" width="29" height="29" aria-label="QR"></canvas>
+    <span class="ai">ID 1 · ${t({uz:'bir martalik kod, 5 daqiqa amal qiladi',ru:'одноразовый код, действует 5 минут'})}</span></div>
+    <button class="abtn" id="checkin">${t({uz:'Demo: registratura QR-kodni skanerladi',ru:'Демо: регистратура отсканировала QR'})}</button>
+    <p class="small muted">${t({uz:'Face ID o‘rniga QR yoki bir martalik kod: arzon, tez va biometrik ma’lumot yig‘ilmaydi.',ru:'QR или одноразовый код вместо Face ID: дёшево, быстро, без сбора биометрии.'})}</p>`;
+}
+
+function viewLab(){
+  if (!S.checkedIn) return `<div class="card"><b>${t({uz:'Natijalar hali yo‘q',ru:'Результатов пока нет'})}</b><p class="small muted">${t({uz:'Avval ko‘rikdan o‘ting. “Tasdiq” bo‘limida kelishingizni tasdiqlang.',ru:'Сначала пройдите осмотр. Подтвердите визит в разделе «Визит».'})}</p><button class="abtn sec" data-go="qr">${t({uz:'Tasdiqqa o‘tish',ru:'Перейти к визиту'})}</button></div>`;
+  return `<div class="row"><b>${t({uz:'Tahlil natijalari',ru:'Результаты анализов'})}</b><span class="chip c-good">${t({uz:'Shifokor tasdiqladi',ru:'Подтверждено врачом'})}</span></div>
+  ${RESULTS.map(r=>`<div class="card"><div class="row"><span class="small">${t(r.n)}</span><span class="chip ${STC[r.st].c}">${t(STC[r.st])}</span></div>
+    <div class="row"><span class="res-v tnum"><b>${r.v}</b> ${r.u}</span><span class="ai">${t({uz:'me’yor',ru:'норма'})} ${r.ref}</span></div>
+    <div class="bar"><s style="left:${r.lo*100}%;width:${(r.hi-r.lo)*100}%"></s><i style="left:calc(${r.pos*100}% - 6px);background:${COLOR[r.st]}"></i></div></div>`).join('')}
+  <div class="card"><b class="small">${t({uz:'Qorin bo‘shlig‘i UTT',ru:'УЗИ брюшной полости'})}</b><p class="small muted">${t({uz:'Jigar va o‘t pufagida o‘zgarish aniqlanmadi.',ru:'Изменений в печени и желчном пузыре не выявлено.'})}</p></div>
+  <div class="card" style="border-color:var(--accent)"><b class="small">${t({uz:'Shifokor xulosasi',ru:'Заключение врача'})}</b><p class="small">${t({uz:'Prediabet xavfi. Endokrinolog qabuli tavsiya etiladi. Poliklinikada mutaxassis navbati 3 hafta — hamkor xususiy klinikada ertaga bo‘sh vaqt bor.',ru:'Риск преддиабета. Рекомендован эндокринолог. Очередь в поликлинике 3 недели — в частной клинике-партнёре есть время завтра.'})}</p>
+    <button class="abtn sec" data-go="menu">${t({uz:'Shaxsiy menyuni ko‘rish',ru:'Посмотреть личное меню'})}</button></div>`;
+}
+
+function viewMenu(){
+  if (!S.checkedIn) return `<div class="card"><b>${t({uz:'Menyu natijalaringizga qarab tuziladi',ru:'Меню составляется по вашим анализам'})}</b><p class="small muted">${t({uz:'Ko‘rikdan o‘tganingizdan keyin bu yerda shaxsiy menyu, suv va kun tartibi chiqadi.',ru:'После осмотра здесь появятся личное меню, режим воды и дня.'})}</p></div>`;
+  const m = MENU[S.day];
+  return `<div class="row"><b>${t({uz:'Shaxsiy menyu',ru:'Личное меню'})}</b><span class="ai">AI · ${t({uz:'shifokor tasdiqlagan',ru:'одобрено врачом'})}</span></div>
+  <p class="small muted">${t({uz:'Asos: glyukoza 6,3, xolesterin 5,9, qon bosimi 138/88. Shakar, tuz va to‘yingan yog‘ kamaytirilgan, kletchatka ko‘paytirilgan.',ru:'Основа: глюкоза 6,3, холестерин 5,9, давление 138/88. Меньше сахара, соли и насыщенных жиров, больше клетчатки.'})}</p>
+  <div class="seg" role="group">${DAYS.map((d,i)=>`<button aria-pressed="${S.day===i}" data-day="${i}">${t(d)}</button>`).join('')}</div>
+  <div class="card">${m.map((x,i)=>`<div class="meal"><b>${t(SLOTS[i])}</b><span>${t(x)}</span></div>`).join('')}</div>
+  <div class="card"><div class="row"><b class="small">${t({uz:'Suv',ru:'Вода'})}</b><span class="res-v tnum">${S.water*250} / 2000 ml</span></div>
+    <div class="glasses">${Array.from({length:8},(_,i)=>`<button class="${i<S.water?'on':''}" data-w="${i}" aria-label="${(i+1)*250} ml"></button>`).join('')}</div>
+    <span class="ai">${t({uz:'Me’yorni shifokor belgilagan',ru:'Норму установил врач'})}</span></div>
+  <div class="card"><b class="small">${t({uz:'Cheklash tavsiya etiladi',ru:'Рекомендуется ограничить'})}</b><div class="list">${LIMIT.map(x=>`<div><span>${t(x)}</span></div>`).join('')}</div></div>`;
+}
+
+function viewScan(){
+  const p = PRODUCTS.find(x=>x.code===S.product);
+  return `<b>${t({uz:'Do‘konda mahsulotni tekshiring',ru:'Проверьте продукт в магазине'})}</b>
+  <p class="small muted">${t({uz:'Shtrix-kodni skanerlang — ilova uni sizning tahlil natijalaringiz bilan solishtiradi. Demo uchun mahsulotni tanlang:',ru:'Отсканируйте штрихкод — приложение сравнит его с вашими анализами. Для демо выберите продукт:'})}</p>
+  ${p ? `<div class="card verdict" style="border-color:${p.k==='good'?'var(--good)':p.k==='bad'?'var(--accent)':p.k==='warn'?'var(--warn)':'var(--line)'}">
+      <div class="row"><b class="small">${t(p.n)}</b><span class="chip ${PK[p.k].c}">${t(PK[p.k])}</span></div>
+      <span class="ai">${p.code}</span><p class="small">${t(p.why)}</p>
+      ${p.alt?`<p class="small"><b>${t({uz:'Muqobil:',ru:'Альтернатива:'})}</b> ${t(p.alt)}</p>`:''}
+      <button class="abtn sec" data-prod="">${t({uz:'Boshqa mahsulot',ru:'Другой продукт'})}</button></div>` : ''}
+  <div class="prod">${PRODUCTS.map(x=>`<button data-prod="${x.code}"><span>${t(x.n)}</span><span class="code">${x.code.slice(-4)}</span></button>`).join('')}</div>
+  ${!S.checkedIn?`<p class="small muted">${t({uz:'Eslatma: ko‘rikdan oldin ham umumiy baho beriladi; natijalar kelgach baho shaxsiylashadi.',ru:'До осмотра даётся общая оценка; после анализов — персональная.'})}</p>`:''}`;
+}
+
+function drawQR(){
+  const c = document.getElementById('qrc'); if(!c) return;
+  const x = c.getContext('2d'), N = 29; x.fillStyle='#fff'; x.fillRect(0,0,N,N); x.fillStyle='#111';
+  let seed = 7;
+  const rnd = () => (seed = (seed*16807) % 2147483647) / 2147483647;
+  for (let i=0;i<N;i++) for (let j=0;j<N;j++) if (rnd()>.5) x.fillRect(i,j,1,1);
+  [[0,0],[N-7,0],[0,N-7]].forEach(([a,b])=>{ x.fillStyle='#fff'; x.fillRect(a-1<0?0:a-1,b-1<0?0:b-1,9,9); x.fillStyle='#111'; x.fillRect(a,b,7,7); x.fillStyle='#fff'; x.fillRect(a+1,b+1,5,5); x.fillStyle='#111'; x.fillRect(a+2,b+2,3,3); });
+}
+
+function renderApp(){
+  renderTabbar();
+  const v = {home:viewHome, qr:viewQR, lab:viewLab, menu:viewMenu, scan:viewScan}[S.tab]();
+  const app = $('#app'); app.innerHTML = v; app.scrollTop = 0;
+  if (S.tab==='qr') drawQR();
+}
+
+/* ---------- clinic panel ---------- */
+const PTABS = [['doctor',{uz:'Shifokor paneli',ru:'Панель врача'}],['rating',{uz:'Poliklinikalar reytingi',ru:'Рейтинг поликлиник'}]];
+const CLINICS = [
+  { n:{uz:'«A» poliklinika',ru:'Поликлиника «А»'}, cov:88, fol:91, sat:4.6 },
+  { n:{uz:'«B» poliklinika',ru:'Поликлиника «Б»'}, cov:81, fol:76, sat:4.4 },
+  { n:{uz:'«C» poliklinika',ru:'Поликлиника «В»'}, cov:72, fol:70, sat:4.1 },
+  { n:{uz:'«D» poliklinika',ru:'Поликлиника «Г»'}, cov:64, fol:58, sat:3.9 },
+  { n:{uz:'«E» poliklinika',ru:'Поликлиника «Д»'}, cov:49, fol:44, sat:3.6 }
+];
+const score = c => Math.round(.5*c.cov + .3*c.fol + .2*(c.sat/5*100));
+const tier = s => s>=85?30 : s>=75?20 : s>=65?10 : 0;
+
+function viewDoctor(){
+  const P = S.patients, came = P.filter(p=>p.status==='came').length;
+  const missed = P.filter(p=>p.status==='missed').length, risk = P.filter(p=>p.risk).length;
+  const F = {all:{uz:'Hammasi',ru:'Все'}, missed:{uz:'Kelmaganlar',ru:'Не пришли'}, risk:{uz:'Xavf guruhi',ru:'Группа риска'}};
+  const rows = P.filter(p=> S.filter==='all' || (S.filter==='missed' && (p.status==='missed'||p.status==='reminded')) || (S.filter==='risk' && p.risk));
+  return `<div class="row" style="flex-wrap:wrap"><div><b>${t({uz:'Dr. Kamola Usmonova',ru:'Др. Камола Усмонова'})}</b><p class="small muted">${t({uz:'«A» poliklinika (demo) · Sog‘liq kuni, bugun',ru:'Поликлиника «А» (демо) · День здоровья, сегодня'})}</p></div><span class="chip c-neu">${t({uz:'2-uchastka',ru:'Участок 2'})}</span></div>
+  <div class="kpis tnum">
+    <div class="kpi"><b>${P.length}</b><span>${t({uz:'Bugun chaqirilgan',ru:'Приглашено сегодня'})}</span></div>
+    <div class="kpi"><b style="color:var(--good)">${came}</b><span>${t({uz:'Keldi',ru:'Пришли'})}</span></div>
+    <div class="kpi"><b style="color:var(--accent)">${missed}</b><span>${t({uz:'Kelmadi',ru:'Не пришли'})}</span></div>
+    <div class="kpi"><b>${risk}</b><span>${t({uz:'Xavf guruhida',ru:'В группе риска'})}</span></div>
+  </div>
+  <div class="seg" role="group">${Object.entries(F).map(([k,l])=>`<button aria-pressed="${S.filter===k}" data-filter="${k}">${t(l)}</button>`).join('')}</div>
+  <div class="tbl"><table>
+    <thead><tr><th>${t({uz:'Bemor',ru:'Пациент'})}</th><th>${t({uz:'Yosh',ru:'Возр.'})}</th><th>${t({uz:'Tekshiruv',ru:'Обследование'})}</th><th>${t({uz:'Holat',ru:'Статус'})}</th><th></th></tr></thead>
+    <tbody>${rows.map(p=>`<tr id="pt-${p.id}" class="${p.me?'me':''}">
+      <td>${esc(p.name)} ${p.risk?`<span class="chip c-bad" title="risk">${t({uz:'xavf',ru:'риск'})}</span>`:''}${p.me?` <span class="ai">← ${t({uz:'ilovadagi',ru:'в приложении'})}</span>`:''}</td>
+      <td class="tnum">${p.age}</td><td class="small">${t(p.test)}</td>
+      <td><span class="chip ${ST[p.status].c}">${t(ST[p.status])}</span></td>
+      <td>${p.status==='missed'?`<button class="mini" data-remind="${p.id}">${t({uz:'Eslatma yuborish',ru:'Напомнить'})}</button>`: p.status==='reminded'?`<button class="mini" data-call="${p.id}">${t({uz:'Hamshira qo‘ng‘irog‘i',ru:'Звонок медсестры'})}</button>`:''}</td>
+    </tr>`).join('')}</tbody></table></div>
+  <p class="small muted">${t({uz:'Ma’lumot bir marta kiritiladi: natijalar poliklinikaning mavjud tibbiy tizimidan olinadi, shifokor alohida hisobot yozmaydi.',ru:'Данные вводятся один раз: результаты берутся из существующей медсистемы поликлиники, врач не пишет отдельных отчётов.'})}</p>`;
+}
+
+function viewRating(){
+  const C = CLINICS.map(c=>({...c, s:score(c)})).sort((a,b)=>b.s-a.s);
+  return `<div><b>${t({uz:'Namunaviy tuman (demo ma’lumot) · 2026, III chorak',ru:'Условный район (демо-данные) · III кв. 2026'})}</b><p class="small muted">${t({uz:'Ustama faqat ko‘riklar soniga emas, sifatga bog‘langan.',ru:'Надбавка привязана к качеству, а не только к числу осмотров.'})}</p></div>
+  <div class="rank tnum">${C.map((c,i)=>`<div class="rk"><span>${t(c.n)}</span><div class="track"><i class="${i===0?'top':''}" style="width:${c.s}%"></i></div><span class="bonus">${c.s} · <b>${tier(c.s)?'+'+tier(c.s)+'%':'—'}</b></span></div>`).join('')}</div>
+  <div class="tbl"><table class="tnum">
+    <thead><tr><th>${t({uz:'Poliklinika',ru:'Поликлиника'})}</th><th>${t({uz:'Qamrov',ru:'Охват'})}</th><th>${t({uz:'Xavf guruhi kuzatuvi',ru:'Наблюдение риска'})}</th><th>${t({uz:'Bemor bahosi',ru:'Оценка'})}</th><th>${t({uz:'Ustama',ru:'Надбавка'})}</th></tr></thead>
+    <tbody>${C.map(c=>`<tr><td>${t(c.n)}</td><td>${c.cov}%</td><td>${c.fol}%</td><td>${c.sat.toFixed(1)}</td><td><span class="chip ${tier(c.s)?'c-good':'c-neu'}">${tier(c.s)?'+'+tier(c.s)+'%':'—'}</span></td></tr>`).join('')}</tbody></table></div>
+  <div class="formula">${t({uz:'Ball',ru:'Балл'})} = 0,5 × ${t({uz:'qamrov',ru:'охват'})} + 0,3 × ${t({uz:'kuzatuv',ru:'наблюдение'})} + 0,2 × ${t({uz:'baho',ru:'оценка'})}<br>≥85 → +30% · ≥75 → +20% · ≥65 → +10%</div>`;
+}
+
+function renderPanel(flashId){
+  $('#ptabs').innerHTML = PTABS.map(([k,l])=>`<button role="tab" id="ptab-${k}" aria-selected="${S.ptab===k}" data-ptab="${k}">${t(l)}</button>`).join('');
+  $('#pbody').innerHTML = S.ptab==='doctor' ? viewDoctor() : viewRating();
+  if (flashId){ const r = document.getElementById('pt-'+flashId); if (r){ r.classList.add('flash'); } }
+}
+
+/* ---------- comparison ---------- */
+function renderCmp(){
+  const rows = [
+    [{uz:'Ko‘riklar kalendarini ko‘rsatadi',ru:'Показывает календарь осмотров'},1,0,1],
+    [{uz:'Fuqaroni faol chaqiradi va kelmaganni kuzatadi',ru:'Активно приглашает и отслеживает неявку'},'?',0,1],
+    [{uz:'Kelishni QR bilan tasdiqlaydi',ru:'Подтверждает визит по QR'},'?',0,1],
+    [{uz:'Shifokor tasdiqlagan natijalar ilovada',ru:'Подтверждённые врачом результаты в приложении'},'?',0,1],
+    [{uz:'Natijaga mos menyu va mahsulot skaneri',ru:'Меню и сканер продуктов по анализам'},0,'~',1],
+    [{uz:'Xususiy klinikaga yo‘llanma',ru:'Направление в частную клинику'},'?',0,1],
+    [{uz:'Poliklinikalar uchun sifat reytingi',ru:'Рейтинг качества поликлиник'},'?',0,1]
+  ];
+  const cell = (v,us) => `<td class="${us?'us':''}">${v===1?'<span class="yes">✓</span>':v==='~'?`<span class="no">${t({uz:'umumiy',ru:'общие'})}</span>`:v==='?'?'<span class="no">?</span>':'<span class="no">—</span>'}</td>`;
+  $('#cmp').innerHTML = rows.map(r=>`<tr><td>${t(r[0])}</td>${cell(r[1])}${cell(r[2])}${cell(r[3],1)}</tr>`).join('');
+}
+
+/* ---------- events ---------- */
+/* ---------- hero: 360 ring + ECG ---------- */
+function renderEcg(){
+  let d='M0 45', x=0;
+  [140,560,980].forEach(b=>{ d+=` H${b} l10 -6 l10 6 h18 l6 8 l10 -46 l10 58 l8 -20 h26 q14 -14 28 0`; x=b+126; });
+  d+=' H1200';
+  $('#ecg').innerHTML = `<path id="ecgp" d="${d}"/><circle r="4"><animateMotion dur="5s" repeatCount="indefinite" path="${d}"/></circle>`;
+}
+renderEcg();
+
+const TICK = [{uz:'Faol chaqiruv',ru:'Активное приглашение'},{uz:'QR bilan tasdiq',ru:'QR-подтверждение'},{uz:'Shifokor tasdiqlagan natijalar',ru:'Результаты от врача'},{uz:'Shaxsiy menyu',ru:'Личное меню'},{uz:'Mahsulot skaneri',ru:'Сканер продуктов'},{uz:'Xususiy klinikaga yo‘llanma',ru:'Направление в частную клинику'},{uz:'Poliklinika reytingi',ru:'Рейтинг поликлиник'}];
+function renderTicker(){ const h = TICK.map(x=>`<span>${t(x)}</span><i></i>`).join(''); $('#ticker').innerHTML = h + h; }
+
+function setLang(l){
+  lang = l; document.body.classList.toggle('l-ru', l==='ru'); document.documentElement.lang = l;
+  $('#btn-uz').setAttribute('aria-pressed', l==='uz'); $('#btn-ru').setAttribute('aria-pressed', l==='ru');
+  try { localStorage.setItem('s360-lang', l); } catch(e){}
+  renderApp(); renderPanel(); renderCmp(); renderTicker();
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  const d = b.dataset;
+  if (d.lang) return setLang(d.lang);
+  if (d.tab) { S.tab = d.tab; return renderApp(); }
+  if (d.go) { S.tab = d.go; return renderApp(); }
+  if (d.day !== undefined) { S.day = +d.day; return renderApp(); }
+  if (d.w !== undefined) { const i = +d.w; S.water = (S.water === i+1) ? i : i+1; return renderApp(); }
+  if (d.prod !== undefined) { S.product = d.prod || null; return renderApp(); }
+  if (b.id === 'checkin') {
+    S.checkedIn = true; S.patients.find(p=>p.me).status = 'came';
+    renderApp(); S.ptab = 'doctor'; S.filter = 'all'; renderPanel(1); return;
+  }
+  if (d.ptab) { S.ptab = d.ptab; return renderPanel(); }
+  if (d.filter) { S.filter = d.filter; return renderPanel(); }
+  if (d.remind) { const p = S.patients.find(x=>x.id===+d.remind); p.status='reminded'; return renderPanel(p.id); }
+  if (d.call) { b.disabled = true; b.textContent = t({uz:'Navbatga qo‘shildi',ru:'Добавлено в очередь'}); return; }
+});
+
+setLang(lang);
+})();
+</script>
+</body>
+</html>

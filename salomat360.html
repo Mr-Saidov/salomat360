@@ -256,6 +256,32 @@ footer .btn.ghost{background:transparent;color:#fff;border-color:rgba(255,255,25
 .why > h3{font-family:var(--f-display);font-size:clamp(1.3rem,2.6vw,1.7rem);font-weight:700}
 .stack td:first-child{white-space:nowrap}
 .stack td{font-size:.95rem}
+/* mission: disease path with where SALOMAT 360 acts */
+#maqsad{background:var(--surface)}
+.path{display:grid;gap:12px;overflow-x:auto;padding-bottom:4px}
+.lane{display:grid;grid-template-columns:repeat(5,minmax(130px,1fr));gap:4px;min-width:680px}
+.st{padding:16px 14px;display:grid;gap:4px;border-radius:4px}
+.st b{font-family:var(--f-display);font-weight:500;font-size:.95rem;line-height:1.2}
+.st span{font-size:.85rem}
+.s1{background:#DDF0E5;color:#14532D}.s2{background:#EEF3D6;color:#3F4A0E}.s3{background:#FBEBC8;color:#6B4404}
+.s4{background:#F9D2D6;color:#7A1222}.s5{background:var(--accent-deep);color:#fff}
+.st:first-child{border-radius:12px 4px 4px 12px}.st:last-child{border-radius:4px 12px 12px 4px}
+.marks{display:grid;grid-template-columns:3fr 2fr;gap:4px;min-width:680px;font-size:.9rem;font-weight:600}
+.mk{display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:start;padding-top:10px;border-top:3px solid}
+.mk i{width:10px;height:10px;border-radius:50%;margin-top:6px;background:currentColor}
+.mk.ours{color:var(--good);border-color:var(--good)}
+.mk.now{color:var(--accent);border-color:var(--accent)}
+.levels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin-top:44px}
+.levels > div{display:grid;gap:8px;align-content:start}
+.levels h3{font-family:var(--f-display);font-size:1.15rem;font-weight:700}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px}
+.vs > div{border-radius:16px;padding:22px;display:grid;gap:10px}
+.vs h3{font-family:var(--f-display);font-weight:700;font-size:1.1rem}
+.vs ul{margin:0;padding-left:20px;display:grid;gap:4px}
+.vs .late{background:var(--accent-soft);color:#5E0E1C}
+.vs .early{background:#DDF0E5;color:#14532D}
+@media (max-width:820px){.levels,.vs{grid-template-columns:1fr}}
+@media (max-width:700px){.lane{grid-template-columns:1fr;min-width:0}.st{border-radius:10px!important}.s1,.s2,.s3{box-shadow:inset 6px 0 0 var(--good)}.s4,.s5{box-shadow:inset 6px 0 0 var(--accent)}.marks{grid-template-columns:1fr;min-width:0}}
 html{scroll-behavior:smooth}
 section[id]{scroll-margin-top:64px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}.ecg circle{display:none}}
@@ -265,6 +291,7 @@ section[id]{scroll-margin-top:64px}
   <div class="wrap">
     <a class="logo" href="#top">SALOMAT <b>360</b></a>
     <nav class="nav">
+      <a href="#maqsad"><span class="uz">Maqsad</span><span class="ru">Цель</span></a>
       <a href="#muammo"><span class="uz">Muammo</span><span class="ru">Проблема</span></a>
       <a href="#yechim"><span class="uz">Yechim</span><span class="ru">Решение</span></a>
       <a href="#demo"><span class="uz">Demo</span><span class="ru">Демо</span></a>
@@ -291,8 +318,8 @@ section[id]{scroll-margin-top:64px}
         <span class="ru">Не ждите болезни. <em>Проверьте здоровье</em> сегодня.</span>
       </h1>
       <p class="lead">
-        <span class="uz">SALOMAT 360 fuqaroni profilaktik ko‘rikka o‘zi chaqiradi, kelganini tasdiqlaydi va tahlil natijasiga qarab har kuni ovqatlanish va turmush tarzi bo‘yicha yordam beradi.</span>
-        <span class="ru">SALOMAT 360 сам приглашает гражданина на профосмотр, подтверждает визит и на основе анализов каждый день помогает с питанием и образом жизни.</span>
+        <span class="uz">SALOMAT 360 — preventiv tibbiyot platformasi. Maqsadimiz: kasallikni oldini olish, a’zolardagi o‘zgarishni erta aniqlash va davolashni kech emas, vaqtida boshlash.</span>
+        <span class="ru">SALOMAT 360 — платформа превентивной медицины. Наша цель: предотвращать болезни, рано выявлять изменения в органах и начинать лечение вовремя, а не поздно.</span>
       </p>
       <div class="cta">
         <a class="btn" href="#demo"><span class="uz">Prototipni sinab ko‘rish</span><span class="ru">Попробовать прототип</span> →</a>
@@ -329,6 +356,31 @@ section[id]{scroll-margin-top:64px}
 
 <div class="ticker" aria-hidden="true"><div class="track" id="ticker"></div></div>
 
+<section id="maqsad">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow"><span class="uz">Asosiy maqsad</span><span class="ru">Главная цель</span></p>
+      <h2><span class="uz">Davolashdan — oldini olishga</span><span class="ru">От лечения — к профилактике</span></h2>
+      <p class="muted"><span class="uz">Ko‘rikdan o‘tishdan maqsad — biror a’zoda o‘zgarish boshlangan bo‘lsa, uni kasallikka aylanmasdan oldin topish va davolashni erta boshlash. Bugun ko‘pchilik shifokorga kasallik kuchayganda boradi. Biz preventiv tibbiyot madaniyatini shakllantirmoqchimiz: sog‘liq har kuni asraladi.</span><span class="ru">Цель осмотра — найти изменения в органе до того, как они станут болезнью, и начать лечение рано. Сегодня большинство идёт к врачу, когда болезнь уже развилась. Мы хотим сформировать культуру превентивной медицины: здоровье берегут каждый день.</span></p>
+    </div>
+    <div class="path">
+      <div class="lane"><div class="st s1"><b><span class="uz">Sog‘lom</span><span class="ru">Здоров</span></b><span><span class="uz">Sog‘lom turmush tarzi</span><span class="ru">Здоровый образ жизни</span></span></div><div class="st s2"><b><span class="uz">Xavf omili</span><span class="ru">Фактор риска</span></b><span><span class="uz">Ortiqcha vazn, qon bosimi</span><span class="ru">Лишний вес, давление</span></span></div><div class="st s3"><b><span class="uz">Boshlang‘ich o‘zgarish</span><span class="ru">Ранние изменения</span></b><span><span class="uz">Masalan, prediabet</span><span class="ru">Например, преддиабет</span></span></div><div class="st s4"><b><span class="uz">Kasallik</span><span class="ru">Болезнь</span></b><span><span class="uz">Masalan, diabet</span><span class="ru">Например, диабет</span></span></div><div class="st s5"><b><span class="uz">Asorat</span><span class="ru">Осложнения</span></b><span><span class="uz">Yurak, buyrak, ko‘z</span><span class="ru">Сердце, почки, глаза</span></span></div></div>
+      <div class="marks">
+        <div class="mk ours"><i></i><span class="uz">SALOMAT 360 shu yerda ishlaydi: oldini olish va erta aniqlash</span><span class="ru">SALOMAT 360 работает здесь: профилактика и раннее выявление</span></div>
+        <div class="mk now"><i></i><span class="uz">Ko‘pchilik bugun shu yerda murojaat qiladi</span><span class="ru">Сегодня большинство обращается здесь</span></div>
+      </div>
+    </div>
+    <div class="levels">
+      <div><p class="eyebrow">1 · <span class="uz">Oldini olish</span><span class="ru">Профилактика</span></p><h3><span class="uz">Kasallik boshlanmasin</span><span class="ru">Чтобы болезнь не началась</span></h3><p class="muted"><span class="uz">To‘g‘ri ovqatlanish, harakat, uyqu va suv. Ilova har kuni kichik, bajarsa bo‘ladigan odatlarni shakllantiradi.</span><span class="ru">Питание, движение, сон и вода. Приложение каждый день формирует маленькие выполнимые привычки.</span></p></div>
+      <div><p class="eyebrow">2 · <span class="uz">Erta aniqlash</span><span class="ru">Раннее выявление</span></p><h3><span class="uz">O‘zgarishni vaqtida topish</span><span class="ru">Найти изменения вовремя</span></h3><p class="muted"><span class="uz">Yosh va xavf omiliga mos muntazam ko‘rik. Belgilar paydo bo‘lishidan oldin ham o‘zgarish tahlil va tekshiruvda ko‘rinadi.</span><span class="ru">Регулярный осмотр по возрасту и рискам. Изменения видны в анализах ещё до появления симптомов.</span></p></div>
+      <div><p class="eyebrow">3 · <span class="uz">Erta davolash</span><span class="ru">Раннее лечение</span></p><h3><span class="uz">Kasallikka aylanmasin</span><span class="ru">Чтобы не стало болезнью</span></h3><p class="muted"><span class="uz">Shifokor, yo‘llanma va kuzatuv. Masalan, prediabet erta topilsa, turmush tarzini o‘zgartirish orqali diabetning oldini olish yoki uni kechiktirish mumkin.</span><span class="ru">Врач, направление и наблюдение. Например, если преддиабет найден рано, изменение образа жизни может предотвратить или отсрочить диабет.</span></p></div>
+    </div>
+    <div class="vs">
+      <div class="late"><h3><span class="uz">Kech aniqlansa</span><span class="ru">Если выявлено поздно</span></h3><ul><li><span class="uz">Og‘ir va uzoq davolash</span><span class="ru">Тяжёлое и долгое лечение</span></li><li><span class="uz">Oila uchun katta xarajat</span><span class="ru">Большие расходы для семьи</span></li><li><span class="uz">Asoratlar xavfi</span><span class="ru">Риск осложнений</span></li></ul></div>
+      <div class="early"><h3><span class="uz">Erta aniqlansa</span><span class="ru">Если выявлено рано</span></h3><ul><li><span class="uz">Oddiyroq davolash, ko‘pincha turmush tarzi bilan</span><span class="ru">Более простое лечение, часто — образом жизни</span></li><li><span class="uz">Kamroq xarajat</span><span class="ru">Меньше расходов</span></li><li><span class="uz">Sog‘lom, faol hayot</span><span class="ru">Здоровая, активная жизнь</span></li></ul></div>
+    </div>
+  </div>
+</section>
 <section id="muammo">
   <div class="wrap">
     <div class="sec-head">
@@ -816,7 +868,7 @@ function renderEcg(){
 }
 renderEcg();
 
-const TICK = [{uz:'Faol chaqiruv',ru:'Активное приглашение'},{uz:'QR bilan tasdiq',ru:'QR-подтверждение'},{uz:'Shifokor tasdiqlagan natijalar',ru:'Результаты от врача'},{uz:'Shaxsiy menyu',ru:'Личное меню'},{uz:'Mahsulot skaneri',ru:'Сканер продуктов'},{uz:'Xususiy klinikaga yo‘llanma',ru:'Направление в частную клинику'},{uz:'Poliklinika reytingi',ru:'Рейтинг поликлиник'}];
+const TICK = [{uz:'Kasallikni oldini olish',ru:'Профилактика болезней'},{uz:'Erta aniqlash — erta davolash',ru:'Раннее выявление — раннее лечение'},{uz:'Faol chaqiruv',ru:'Активное приглашение'},{uz:'QR bilan tasdiq',ru:'QR-подтверждение'},{uz:'Shifokor tasdiqlagan natijalar',ru:'Результаты от врача'},{uz:'Shaxsiy menyu',ru:'Личное меню'},{uz:'Mahsulot skaneri',ru:'Сканер продуктов'},{uz:'Xususiy klinikaga yo‘llanma',ru:'Направление в частную клинику'},{uz:'Poliklinika reytingi',ru:'Рейтинг поликлиник'}];
 function renderTicker(){ const h = TICK.map(x=>`<span>${t(x)}</span><i></i>`).join(''); $('#ticker').innerHTML = h + h; }
 
 function setLang(l){
